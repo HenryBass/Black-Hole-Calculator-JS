@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+  <title>Black Hole Calculator</title>
+
+  <meta charset="UTF-8" />
+
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+</head>
+
+<style>
+
+h1{
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    text-align: center;
+}
+
+h2{
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    text-align: center;
+    margin: 15px;
+}
+
+p{
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    text-align: center;
+    margin: 5px;
+}
+
+form{
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    text-align: center;
+}
+
+button{
+    background-color: lightblue;
+    border: none;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 4px
+}
+
+.input {
+    width: 30%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+a{
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    text-align: center;
+    font-size: 24px;
+}
+
+.output{
+    visibility:hidden;
+}
+
+</style>
+
+<body>
+
+  <h1>Black Hole Calculator</h1>
+
+  <form>
+    <input id="text" class=input placeholder="Solar Masses">
+    <button type="button" onclick="solve();">Solve</button>
+  </form>
+  <div class=output id=output>
+  <h2>Schwarzschild Radius</h2>
+  <p id = radiuskm></p>
+  <p id = radiusm></p>
+  <p id = radiusly></p>
+  <h2>Time to decay due to Hawking Radiation</h2>
+  <p id = lifetime></p>
+  <h2>Temperature</h2>
+  <p id = temp></p>
+  <h2>Surface Area</h2>
+  <p id = surfacem></p>
+  <p id = surfacekm></p>
+  <h2>Effective Density</h2>
+  <p id = density></p>
+  <h2>Nominal Luminosity</h2>
+  <p id = luminosity></p>
+  <h2>Newtonian Surface Gravity</h2>
+  <p id = grav></p>
+</div>
+  <br>
+  <br>
+  <h2><a href="about.html">About</a></h2>
+    <p>Henry Bass, 2021</p>
+
+</body>
+
+<script>
+
+    const G = 6.674e-11
+    const c = 299792458
+    const pi = 3.14159265358979323846
+    const lightyear = c * 31536000
+    const plankconstant = 6.62607015*10**-34
+    const reducedplankconstant = plankconstant / (pi*2)
+    const boltzmannconstant = 1.380649 * 10**-23
+    const sun = 1.9891 * 10**30
+
+
+    function solve() {
+        document.getElementById('output').style.visibility = 'visible';
+        var mass = (document.getElementsByClassName('input')[0].value) * sun
+        event_horizon_radius = mass*((2*G) / (c**2));
+        lifetime = (mass ** 3) * (5120 * pi * (G**2))/(1.8083*reducedplankconstant*(c**4));
+        temperature = reducedplankconstant * c**3 / (8 * pi * G * mass * boltzmannconstant);
+        surfacearea = event_horizon_radius **2
+        density = (mass / (event_horizon_radius / 1000 ** 3))
+        luminosity = (mass**2) * ((reducedplankconstant * (c ** 6)) / 15360 * pi * (G**2))
+        gravforce = (G * mass) / event_horizon_radius ** 2
+
+        document.getElementById('radiusm').innerHTML = event_horizon_radius + " m";
+        document.getElementById('radiuskm').innerHTML = (event_horizon_radius / 1000) + " km";
+        document.getElementById('radiusly').innerHTML = (event_horizon_radius / lightyear) + " Light Years";
+        document.getElementById('lifetime').innerHTML = (lifetime) + " Years";
+        document.getElementById('temp').innerHTML = temperature + " K";
+        document.getElementById('surfacem').innerHTML = surfacearea + " M^2";
+        document.getElementById('surfacekm').innerHTML = surfacearea + " KM^2";
+        document.getElementById('density').innerHTML = density + " Solar Mass per KM^3";
+        document.getElementById('luminosity').innerHTML = luminosity + " W";
+        document.getElementById('grav').innerHTML = gravforce + " M/S^2";
+    }
+
+</script>
+
+</html>
