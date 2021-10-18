@@ -22,7 +22,7 @@ h1{
 h2{
     font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     text-align: center;
-    margin: 15px;
+    margin: 10px;
 }
 
 p{
@@ -76,7 +76,7 @@ a{
   <h1>Black Hole Calculator</h1>
 
   <form>
-    <input id="text" class=input placeholder="Solar Masses">
+    <input id="text" class=input placeholder="Solar Masses of Black Hole">
     <button type="button" onclick="solve();">Solve</button>
   </form>
   <div class=output id=output>
@@ -97,6 +97,11 @@ a{
   <p id = luminosity></p>
   <h2>Newtonian Surface Gravity</h2>
   <p id = grav></p>
+  <p id = luminosity></p>
+  <h2>Length of Decond relative to Innertial Observetn</h2>
+  <p id = lengthm></p>
+  <p id = lengthkm></p>
+  <p id = lengthly></p>
 </div>
   <br>
   <br>
@@ -127,6 +132,9 @@ a{
         density = (mass / (event_horizon_radius / 1000 ** 3))
         luminosity = (mass**2) * ((reducedplankconstant * (c ** 6)) / 15360 * pi * (G**2))
         gravforce = (G * mass) / event_horizon_radius ** 2
+        secondlength = Math.sqrt(1 - 2 * ((mass * G) / ((event_horizon_radius + 1) * (c ** 2))))
+        secondlengthkm = Math.sqrt(1 - 2 * ((mass * G) / ((event_horizon_radius + 1000) * (c ** 2))))
+        secondlengthly = Math.sqrt(1 - 2 * ((mass * G) / ((event_horizon_radius + lightyear) * (c ** 2))))
 
         document.getElementById('radiusm').innerHTML = event_horizon_radius + " m";
         document.getElementById('radiuskm').innerHTML = (event_horizon_radius / 1000) + " km";
@@ -138,6 +146,9 @@ a{
         document.getElementById('density').innerHTML = density + " Solar Mass per KM^3";
         document.getElementById('luminosity').innerHTML = luminosity + " W";
         document.getElementById('grav').innerHTML = gravforce + " M/S^2";
+        document.getElementById('lengthm').innerHTML = secondlength + " At 1 meter from event horizon";
+        document.getElementById('lengthkm').innerHTML = secondlengthkm + " At 1 kilometer from event horizon";
+        document.getElementById('lengthly').innerHTML = secondlengthly + " At 1 light year from event horizon";
     }
 
 </script>
